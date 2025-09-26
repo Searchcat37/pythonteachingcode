@@ -37,17 +37,6 @@ class Calculator(Frame):
         self.entry.insert(END, char)
         self.entry.configure(state="disabled")
 
-    def add_lastname(self):
-        """
-        Inserts your last name into the Entry.
-        """
-        self.entry.configure(state="normal")
-        self.flash(self.firstname_bttn)
-        if self.entry.get() == "Invalid Input":
-            self.entry.delete(0,END)
-        self.entry.insert(END, "Kennel")
-        self.entry.configure(state="disabled")
-
     def clear(self):
         """
         Allows user to backspace their entry.
@@ -85,12 +74,11 @@ class Calculator(Frame):
         e = e.replace("²", "**2")
         e = e.replace("^", "**")
         e = e.replace("÷", "/")
-        e = e.replace("sin", "sin")
-        e = e.replace("cos", "cos")
-        e = e.replace("tan", "tan")
-
+        e = e.replace("Sin", "sin")
+        e = e.replace("Cos", "cos")
+        e = e.replace("Tan", "tan")
         try:
-            ans = eval(e, {"sqr": sqr, "sin": sin, "cos": cos, "tan": tan})
+            ans = eval(e)
         except Exception as ex:
             self.entry.delete(0,END)
             self.entry.insert(0, "Invalid Input")
@@ -140,7 +128,7 @@ class Calculator(Frame):
         master.bind("4", lambda event, char="DT", btn=self.four_bttn: self.add_chr(char, btn))
         master.bind("3", lambda event, char="3", btn=self.three_bttn: self.add_chr(char, btn))
         master.bind("2", lambda event, char="2", btn=self.two_bttn: self.add_chr(char, btn))
-        # master.bind("1", lambda event, char="1", btn=self.one_bttn: self.add_chr(char, btn))
+        master.bind("1", lambda event, char="1", btn=self.one_bttn: self.add_chr(char, btn))
         master.bind("0", lambda event, char="0", btn=self.zero_bttn: self.add_chr(char, btn))
         master.bind("*", lambda event, char="×", btn=self.mult_bttn: self.add_chr(char, btn))
         master.bind("/", lambda event, char="÷", btn=self.div_bttn: self.add_chr(char, btn))
@@ -158,8 +146,8 @@ class Calculator(Frame):
         Creates the widgets to be used in the grid.
         :return: None
         """
-        self.eq_bttn = Button(self, text="=", width=9, height=3, bg="lightgrey", command=lambda: self.calculate())
-        self.eq_bttn.grid(row=4, column=4, columnspan=1)
+        self.eq_bttn = Button(self, text="=", width=20, height=3, bg="lightgrey", command=lambda: self.calculate())
+        self.eq_bttn.grid(row=4, column=4, columnspan=2)
 
         self.ac_bttn = Button(self, text='CE', width=9, height=3, command=lambda: self.clear_all())
         self.ac_bttn.grid(row=1, column=4)
@@ -200,8 +188,8 @@ class Calculator(Frame):
         self.six_bttn = Button(self, text="6", width=9, height=3, command=lambda: self.add_chr(6))
         self.six_bttn.grid(row=2, column=2)
 
-        self.firstname_bttn = Button(self, text="Colin", width=9, height=3, command=self.add_lastname)
-        self.firstname_bttn.grid(row=3, column=0)
+        self.one_bttn = Button(self, text="Colin", width=9, height=3, command=lambda: self.add_chr("Kennel"))
+        self.one_bttn.grid(row=3, column=0)
 
         self.two_bttn = Button(self, text="2", width=9, height=3, command=lambda: self.add_chr(2))
         self.two_bttn.grid(row=3, column=1)
@@ -228,13 +216,13 @@ class Calculator(Frame):
         self.sqr_bttn.grid(row=3, column=5)
 
         self.sin_bttn = Button(self, text="sin", width=9, height=3, command=lambda: self.add_chr('sin('))
-        self.sin_bttn.grid(row=2, column=5)
+        self.sin_bttn.grid(row=2, column=6)
 
         self.cos_bttn = Button(self, text="cos", width=9, height=3, command=lambda: self.add_chr('cos('))
-        self.cos_bttn.grid(row=3, column=5)
+        self.cos_bttn.grid(row=3, column=6)
 
         self.tan_bttn = Button(self, text="tan", width=9, height=3, command=lambda: self.add_chr('tan('))
-        self.tan_bttn.grid(row=4, column=5)
+        self.tan_bttn.grid(row=4, column=6)
 
 root = Tk()
 root.geometry()
