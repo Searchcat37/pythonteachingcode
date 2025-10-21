@@ -22,6 +22,10 @@ def greet():
 def home():  
     return render_template("home.html",myName="Type your name in the box and click submit!")
 
+@app.route('/colin')
+def colin():
+    return render_template("kennel.html",)
+
 @app.route('/about/')
 def about():
     return render_template("about.html")
